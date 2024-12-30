@@ -1,3 +1,5 @@
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -27,6 +29,7 @@ class Course(models.Model):
     def __str__(self):
         return self.title
     
+
 class Module(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="modules")
 
@@ -35,3 +38,13 @@ class Module(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+class Content(models.Model):
+    module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name="contents")
+
+    # Content Type for Polymorphic Relationships
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    item = GenericForeignKey('content_type', 'object_id')
