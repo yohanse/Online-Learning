@@ -53,7 +53,7 @@ class Content(models.Model):
 class ItemBase(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="%(class)s_related")
 
-    # order = models.PositiveIntegerField(auto_increment=True)
+    order = models.PositiveIntegerField(auto_increment=True)
 
     title = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
